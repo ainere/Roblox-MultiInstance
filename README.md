@@ -6,7 +6,7 @@ Run more than one Roblox client at once on Windows. A small tray app does the Pr
 
 No build, install or admin rights needed. Windows 10/11 (64-bit) already has everything it runs on.
 
-1. Download `RobloxMultiInstance.exe` from the [latest release](https://github.com/ainere/Roblox-Multiprocess/releases/latest).
+1. Download `RobloxMultiInstance.exe` from the [latest release](https://github.com/ainere/Roblox-MultiInstance/releases/latest).
 2. Move it to a folder you'll keep it in, for example `%LOCALAPPDATA%\RobloxMultiInstance`. "Start with Windows" remembers where the exe is, and it writes its log next to itself, so avoid `Program Files`.
 3. Run it. The exe isn't code-signed, so Windows SmartScreen may warn: click **More info**, then **Run anyway**. If you'd rather not run a downloaded binary, [build it yourself](#build-from-source), which takes one command.
 4. Right-click the tray icon and tick **Start with Windows**.
