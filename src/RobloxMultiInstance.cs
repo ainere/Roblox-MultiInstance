@@ -99,14 +99,17 @@ namespace RobloxMultiInstance
             }
         }
 
-        // The installed Roblox client's own icon with a red slash over it. The icon is read from the
-        // client at runtime so no Roblox artwork has to ship with this app.
+        // The installed Roblox client's own icon with an infinity sign in the bottom-right corner: a black
+        // body with a cyan-to-magenta core. The icon is read from the client at runtime so no Roblox
+        // artwork has to ship with this app.
         static Icon MakeIcon()
         {
             using (var bmp = new Bitmap(32, 32))
             using (var g = Graphics.FromImage(bmp))
-            using (var outline = new Pen(Color.White, 5.5f) { StartCap = LineCap.Round, EndCap = LineCap.Round })
-            using (var slash = new Pen(Color.FromArgb(230, 40, 40), 3f) { StartCap = LineCap.Round, EndCap = LineCap.Round })
+            using (var halo = new Pen(Color.White, 6.4f) { LineJoin = LineJoin.Round })
+            using (var body = new Pen(Color.Black, 4.4f) { LineJoin = LineJoin.Round })
+            using (var coreBrush = new LinearGradientBrush(new RectangleF(10, 18, 20, 12), Color.FromArgb(0, 229, 255), Color.FromArgb(255, 43, 214), LinearGradientMode.Horizontal))
+            using (var core = new Pen(coreBrush, 2.2f) { LineJoin = LineJoin.Round })
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -117,10 +120,30 @@ namespace RobloxMultiInstance
                     else using (var blue = new SolidBrush(Color.FromArgb(45, 90, 255))) g.FillRectangle(blue, 0, 0, 32, 32);
                 }
 
-                g.DrawLine(outline, 4, 4, 28, 28);
-                g.DrawLine(slash, 4, 4, 28, 28);
+                // White halo under the black body keeps the sign readable on the blue tile at 16px.
+                var points = InfinityPoints(20f, 24f, 19f, 10f);
+                g.DrawPolygon(halo, points);
+                g.DrawPolygon(body, points);
+                g.DrawPolygon(core, points);
                 return Icon.FromHandle(bmp.GetHicon());
             }
+        }
+
+        // Lemniscate of Bernoulli, stretched vertically so the loops stay open at small sizes.
+        static PointF[] InfinityPoints(float centerX, float centerY, float width, float height)
+        {
+            const int steps = 72;
+            const double maxY = 0.35355;    // peak of sin(t)cos(t)/(1+sin(t)^2)
+            var points = new PointF[steps];
+            for (int i = 0; i < steps; i++)
+            {
+                double t = 2 * Math.PI * i / steps;
+                double denom = 1 + Math.Sin(t) * Math.Sin(t);
+                points[i] = new PointF(
+                    centerX + (float)(width / 2 * Math.Cos(t) / denom),
+                    centerY + (float)(height / 2 * Math.Sin(t) * Math.Cos(t) / denom / maxY));
+            }
+            return points;
         }
 
         static Icon LoadRobloxIcon()

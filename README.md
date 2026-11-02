@@ -12,7 +12,7 @@ No build, install or admin rights needed. Windows 10/11 (64-bit) already has eve
 4. Right-click the tray icon and tick **Start with Windows**.
 5. Launch Roblox as many times as you like.
 
-The Roblox icon with a red slash appears in the system tray (check the `^` overflow). It's read from your installed Roblox client at runtime, so no Roblox artwork is included in this repo. Right-click it:
+The Roblox icon with a small neon (cyan-to-magenta) infinity sign in the corner appears in the system tray (check the `^` overflow). It's read from your installed Roblox client at runtime, so no Roblox artwork is included in this repo. Right-click it:
 
 - **Unlocked N instances**: how many Roblox processes it has freed since it started.
 - **Pause**: stops closing handles until unticked.
